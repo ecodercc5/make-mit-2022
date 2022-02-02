@@ -38,41 +38,41 @@ export const VideoBackground = () => {
   }, []);
 
   return (
-    <div>
-      <video
-        id="video"
-        ref={videoRef}
-        onPlaying={async () => {
-          console.log("[on playing]");
+    <video
+      className="absolute w-full h-full top-0 left-0"
+      ref={videoRef}
+      onPlaying={async () => {
+        console.log("[on playing]");
 
-          const intervalId = setInterval(async () => {
-            // console.log("[on play]");
+        const intervalId = setInterval(async () => {
+          // console.log("[on play]");
 
-            // do ai magic
-            // console.log("[doing ai magic]");
+          // do ai magic
+          // console.log("[doing ai magic]");
 
-            const video = videoRef.current!;
+          const video = videoRef.current!;
 
-            const facialExpressionDetection = await faceapi
-              .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
-              .withFaceExpressions();
+          const facialExpressionDetection = await faceapi
+            .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+            .withFaceExpressions();
 
-            if (facialExpressionDetection.length === 0) {
-              return;
-            }
+          if (facialExpressionDetection.length === 0) {
+            return;
+          }
 
-            const expressions = facialExpressionDetection[0].expressions;
-            const emotion = Emotions.getMostProbableEmotion(expressions);
+          const expressions = facialExpressionDetection[0].expressions;
+          const emotion = Emotions.getMostProbableEmotion(expressions);
 
-            // console.log(expressions);
-            // console.log(emotion);
+          // console.log(expressions);
+          // console.log(emotion);
 
-            setEmotion(emotion);
-          }, 1000);
+          console.log("[setting emotion]");
 
-          // setTimeout(() => window.clearInterval(intervalId), 5000);
-        }}
-      />
-    </div>
+          setEmotion(emotion);
+        }, 1000);
+
+        // setTimeout(() => window.clearInterval(intervalId), 5000);
+      }}
+    />
   );
 };
